@@ -176,6 +176,9 @@ def t60_impulse(file_name, bands, rt='t30'):
     elif band_type is 'third':
         low = third_low(bands[0], bands[-1])
         high = third_high(bands[0], bands[-1])
+    else:
+        low = [b[0] for b in bands]
+        high = [b[1] for b in bands]
 
     rt = rt.lower()
     if rt == 't30':
@@ -195,9 +198,9 @@ def t60_impulse(file_name, bands, rt='t30'):
         end = -10.0
         factor = 6.0
 
-    t60 = np.zeros(bands.size)
+    t60 = np.zeros(len(bands))
 
-    for band in range(bands.size):
+    for band in range(len(bands)):
         # Filtering signal
         filtered_signal = bandpass(raw_signal, low[band],
                                                  high[band], fs, order=8)
